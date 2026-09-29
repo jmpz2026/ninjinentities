@@ -1,0 +1,78 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "https://maven.minecraftforge.net"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        // anatawa12's maintained fork of ForgeGradle 1.2 (works with modern
+        // Gradle/JDK and fixes the dead Mojang download URLs).
+        classpath('com.anatawa12.forge:ForgeGradle:1.2-1.0.+') {
+            changing = true
+        }
+    }
+}
+
+apply plugin: 'forge'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+version = "1.2.7.4"
+group = "hedaox.ninjinentities"
+archivesBaseName = "ninjinentities"
+
+minecraft {
+    version = "1.7.10-10.13.4.1614-1.7.10"
+    runDir = "run"
+    mappings = "stable_12"
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+// Compile-only deps (DragonBlockC, JRMCore, JBRA-Client), SRG->MCP remapped
+// with tools/InheritRemap. Not shipped inside the mod jar.
+configurations {
+    buildOnly
+}
+
+sourceSets.main.compileClasspath += configurations.buildOnly
+
+task showCp {
+    doLast {
+        println "=== compileJava classpath ==="
+        tasks.compileJava.classpath.files.each { f -> println "  ${f}" }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    buildOnly fileTree(dir: 'libs-build-only', include: ['*.jar'])
+}
+
+// mcmod.info is copied verbatim (the original ships a hardcoded version).
+
+// Suppress doclint on Java 8+ (decompiled output may contain malformed Javadoc).
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
+
+// Lenient compile: decompiled code carries unchecked / raw-type warnings.
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-Xlint:none' << '-nowarn'
+}

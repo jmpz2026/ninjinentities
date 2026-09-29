@@ -1,0 +1,37 @@
+# Build output
+build/
+out/
+
+# Gradle
+.gradle/
+
+# Minecraft run directory
+run/
+eclipse/
+
+# Original binary (reference only, rebuilt from source)
+/*.jar
+
+# Third-party jars that must NOT be redistributed here:
+# DragonBlockC / JRMCore / JBRA-Client (JinRyuu) and Forge/Minecraft sources.
+libs-build-only/*.jar
+tools/forgeSrc-*.jar
+tools/mcp_stable-12/
+
+# Compiled tool classes (rebuild from InheritRemap.java)
+tools/*.class
+
+# IDE
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
