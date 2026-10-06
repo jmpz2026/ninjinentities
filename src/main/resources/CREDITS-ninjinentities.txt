@@ -1,0 +1,8 @@
+ninjinentities - Dragon Block Resurrection build
+
+Original mod: ninjinentities, Copyright (C) Hedaox 2020.
+This is a modified version of Hedaox's mod, maintained by Machitos for the
+Dragon Block Resurrection server. All credit for the original mod goes to Hedaox.
+
+Modified source code (public): https://github.com/jmpz2026/ninjinentities
+License: see LICENSE-ninjinentities.txt (the same license as the original mod).
